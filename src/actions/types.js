@@ -1,6 +1,8 @@
 export const ORDERS_FETCH = "orders_fetch"
 export const ORDER_ADD = "order_add"
 export const ORDER_DELETE = "order_delete"
+export const ORDER_POST = "order_post"
+export const ORDER_PAYMENT_FETCH = "order_payment_fetch"
 
 export const PRODUCTS_FETCH = "products_fetch"
 

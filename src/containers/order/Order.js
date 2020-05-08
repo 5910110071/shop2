@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { connect } from 'react-redux';
-import { ordersFetch, orderDelete } from '../../actions'
+import { ordersFetch, orderDelete ,ordersPost } from '../../actions'
 
 
 class Order extends Component {
@@ -54,6 +54,27 @@ class Order extends Component {
         }
     }
 
+    confirmOrder() {
+        const { totalPrice, orders } = this.props.orders
+        //console.log("here0",orders)
+        if (orders && orders.length > 0) {
+            //console.log("here1")
+            this.props.ordersPost(this.props.orders)
+        }
+        /*
+        else{
+            //console.log("here2")
+            this.setState({
+                totalPrice: 0,
+                orders: [],
+                confirm: true,
+                msg: "กรุณาเลือกสินค้า"
+            })
+        }
+        */
+
+    }
+
     render() {
 
         return (
@@ -78,7 +99,7 @@ class Order extends Component {
 
                     <hr />
 
-                    <button className="btn  btn-danger title" onClick={() => this.props.onConfirmOrder()} >ยืนยัน</button>
+                    <button className="btn  btn-danger title" onClick={() => this.confirmOrder()} >ยืนยัน</button>
                     <button className="btn  btn-secondary title" onClick={() => this.props.onCancelOrder()} >ยกเลิก</button>
                 </div>
 
@@ -92,4 +113,4 @@ function mapStateToProps({ orders }) {
     console.log("orders", orders)
     return { orders }
 }
-export default connect(mapStateToProps, { ordersFetch, orderDelete })(Order)
+export default connect(mapStateToProps, { ordersFetch, orderDelete ,ordersPost})(Order)

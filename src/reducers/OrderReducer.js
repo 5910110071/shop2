@@ -1,4 +1,4 @@
-import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE } from "../actions/types"
+import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE ,ORDER_POST  } from "../actions/types"
 export default function (state = { totalPrice: 0, orders: [], confirm: false, msg: '' }, action) {
     switch (action.type) {
         case ORDERS_FETCH:
@@ -45,6 +45,8 @@ export default function (state = { totalPrice: 0, orders: [], confirm: false, ms
             }
             console.log("Order2", state)
             return state
+        case ORDER_POST:
+            return {totalPrice: 0,orders: [],saved : true , msg : "บันทึกสินค้าเรียบร้อย"}
         default: return state
     }
 }
