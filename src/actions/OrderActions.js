@@ -1,11 +1,11 @@
 import axios from "axios"
-import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE , ORDER_POST } from "./types"
+import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE, ORDER_POST , ORDER_CANCEL } from "./types"
 
 
-export const ordersPost = ({orders,totalPrice}) => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
+export const ordersPost = ({ orders, totalPrice }) => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
     return dispatch => {
-        axios.post("http://localhost:3002/orders",{ orderDate: new Date(), totalPrice, orders }).then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
-            res => {                                                            
+        axios.post("http://localhost:3002/orders", { orderDate: new Date(), totalPrice, orders }).then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+            res => {
                 dispatch({ type: ORDER_POST, payload: res.data })
             }
         )
@@ -15,7 +15,7 @@ export const ordersPost = ({orders,totalPrice}) => { // ตอนนี้ทุ
 
 export const ordersFetch = () => {
     return dispatch => {
-            dispatch({ type: ORDERS_FETCH})
+        dispatch({ type: ORDERS_FETCH })
     }
 }
 
@@ -33,6 +33,12 @@ export const ordersFetch = () => {
     }
 }
 */
+
+export const orderCancel = product => {
+    return dispatch => {
+        dispatch({ type: ORDER_CANCEL, payload: product })
+    }
+}
 
 export const orderAdd = (product) => {
     return dispatch => {

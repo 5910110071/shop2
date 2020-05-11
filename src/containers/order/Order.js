@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { connect } from 'react-redux';
-import { ordersFetch, orderDelete ,ordersPost } from '../../actions'
+import { ordersFetch, orderDelete ,ordersPost ,orderCancel} from '../../actions'
 
 
 class Order extends Component {
@@ -14,22 +14,9 @@ class Order extends Component {
         this.props.ordersFetch()
     }
 
-    delOrder(order) {
-        //this.props.orderDelete(order.id)
-    }
-    showOrders(orders) {
-        if (!orders || orders.length == 0) {
-            return <li className="text-right text-muted title">ไม่มีสินค้าค่ะ</li>
-        } else {
-            return orders.map(order => {
-                return (
-                    <li key={order.product_id} className="text-right text-success title">
-                        {order.product.product_name} x {order.quantity} = {order.product.product_price * order.quantity}
-                        <button className="btn btn-light btn-sm" onClick={() => this.props.onDelOrder(order.product)} >X</button>
-                    </li>
-                )
-            })
-        }
+    cancelOrder(product) {
+        console.log("cancelOrder",product)
+        this.props.orderCancel(product)
     }
 
     showOrders2(orders) {
@@ -44,7 +31,7 @@ class Order extends Component {
                             <div class="card-body">
                                 <h5 class="card-title">{order.product.product_name} x {order.quantity} = {order.product.product_price * order.quantity}</h5>
 
-                                <button className="btn btn-light btn-sm" onClick={() => this.props.onDelOrder(order.product)} >X</button>
+                                <button className="btn btn-light btn-sm" onClick={() => this.cancelOrder(order.product)} >X</button>
                             </div>
                         </div>
                     </div>
@@ -56,27 +43,12 @@ class Order extends Component {
 
     confirmOrder() {
         const { totalPrice, orders } = this.props.orders
-        //console.log("here0",orders)
         if (orders && orders.length > 0) {
-            //console.log("here1")
             this.props.ordersPost(this.props.orders)
         }
-        /*
-        else{
-            //console.log("here2")
-            this.setState({
-                totalPrice: 0,
-                orders: [],
-                confirm: true,
-                msg: "กรุณาเลือกสินค้า"
-            })
-        }
-        */
-
     }
 
     render() {
-
         return (
             <div>
                 <Header />
@@ -84,23 +56,14 @@ class Order extends Component {
                     <h1 className="text-right"> ยอดรวม : {this.props.orders.totalPrice}</h1>
                     <hr />
 
-
-                    {false && <ul className="list-unstyled ">
-                        {this.showOrders(this.props.orders.orders)}
-                    </ul>}
-
-
-
-
                     <div class="row">
                         {this.showOrders2(this.props.orders.orders)}
                     </div>
 
-
                     <hr />
 
                     <button className="btn  btn-danger title" onClick={() => this.confirmOrder()} >ยืนยัน</button>
-                    <button className="btn  btn-secondary title" onClick={() => this.props.onCancelOrder()} >ยกเลิก</button>
+                    {/* <button className="btn  btn-secondary title" onClick={() => this.props.onCancelOrder()} >ยกเลิก</button> */}
                 </div>
 
                 <Footer />
@@ -113,4 +76,4 @@ function mapStateToProps({ orders }) {
     console.log("orders", orders)
     return { orders }
 }
-export default connect(mapStateToProps, { ordersFetch, orderDelete ,ordersPost})(Order)
+export default connect(mapStateToProps, { ordersFetch, orderDelete ,ordersPost,orderCancel})(Order)

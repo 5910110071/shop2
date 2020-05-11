@@ -1,13 +1,13 @@
 import React, { Component } from "react"
-import { connect } from "react-redux" 
+import { connect } from "react-redux"
 import { reduxForm, Field } from "redux-form"
-import FormField from "../common/FormField"
-import { productFormField } from "./formFields"
-class ProductForm extends Component {
+import FormField from "../../components/common/FormField"
+import { orderFormField } from "./OrderFormFields"
+class PaymentForm extends Component {
 
-    renderFields(productFormField) {
+    renderFields(orderFormField) {
 
-        return productFormField.map(({ label, name, type, required }) => {
+        return orderFormField.map(({ label, name, type, required }) => {
             return (
                 <Field key={name} label={label} name={name} type={type} required={required} component={FormField} />
             )
@@ -20,10 +20,10 @@ class ProductForm extends Component {
         return (
             <div>
                 <form onSubmit={this.props.handleSubmit(onProductSubmit)}>
-                    {this.renderFields(productFormField)}
+                    {this.renderFields(orderFormField)}
                     <button className="btn btn-block btn-info title" type="submit" >บันทึก</button>
                 </form>
-
+ 
             </div>
         )
     }
@@ -32,16 +32,16 @@ class ProductForm extends Component {
 function validate(values) {
     console.log(values)
     const errors = {};
-    productFormField.forEach(({ name, required }) => {
+    orderFormField.forEach(({ name, required }) => {
         if (!values[name] && required) {
             errors[name] = 'กรุณากรอกข้อมูล'
         }
     })
     return errors // redux from จะจัดการโดยการส่ง error ไปให้ Field
 }
-function mapStateToProps({ products }) {
-    if (products && products.id) {
-        return { initialValues: products }
+function mapStateToProps({ orderPayment }) {
+    if (orderPayment && orderPayment.id) {
+        return { initialValues: orderPayment }
     }
     else {
         return {}
@@ -49,5 +49,5 @@ function mapStateToProps({ products }) {
 
 }
 
-ProductForm = reduxForm({ validate, form: "productForm" })(ProductForm)
-export default connect(mapStateToProps)(ProductForm)
+PaymentForm = reduxForm({ validate, form: "paymentFhhorm" })(PaymentForm)
+export default connect(mapStateToProps)(PaymentForm)

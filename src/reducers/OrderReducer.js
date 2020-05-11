@@ -1,4 +1,4 @@
-import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE ,ORDER_POST  } from "../actions/types"
+import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE, ORDER_POST, ORDER_CANCEL } from "../actions/types"
 export default function (state = { totalPrice: 0, orders: [], confirm: false, msg: '' }, action) {
     switch (action.type) {
         case ORDERS_FETCH:
@@ -43,10 +43,21 @@ export default function (state = { totalPrice: 0, orders: [], confirm: false, ms
 
 
             }
-            console.log("Order2", state)
+            console.log("Order", state)
             return state
         case ORDER_POST:
-            return {totalPrice: 0,orders: [],saved : true , msg : "บันทึกสินค้าเรียบร้อย"}
+            return { totalPrice: 0, orders: [], saved: true, msg: "บันทึกสินค้าเรียบร้อย" }
+        case ORDER_CANCEL:
+            console.log("ORDER_CANCEL", state)
+            let findOrder3 = state.orders.find(order => order.product.product_id == action.payload.product_id);
+            let resultOrder = state.orders.filter(order => order.product.product_id != action.payload.product_id);
+            const totalPrice2 = state.totalPrice - (findOrder3.quantity * parseInt(findOrder3.product.product_price));
+            state={
+                totalPrice: totalPrice2,
+                orders: resultOrder,
+                confirm: false
+            }
+            return state
         default: return state
     }
 }

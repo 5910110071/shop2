@@ -10,7 +10,7 @@ export default ({ input, label, type, required, meta }) => {
                 <div className="mt-2 text-danger title text-right">
                     {meta.error}
                 </div>
-            }
+            } 
         </div>
     )
 }

@@ -14,23 +14,52 @@ class ProductDetail extends Component {
         if (this.props.match.params.id) {
             this.props.productFetch(this.props.match.params.id)
         }
+
+       /* let findOrder = this.props.orders.orders.find(order => order.product.product_id == this.props.match.params.id);
+        if (findOrder) {
+            this.setState({
+                count: findOrder.quantity
+            })
+        }
+        else
+            this.setState({
+                count: 0
+            })*/
     }
+
     addOrder(product) {
         this.props.orderAdd(product)
 
-        this.setState({
+        /*this.setState({
             count: this.state.count + 1
-        })
+        })*/
     }
 
     delOrder(id) {
-        if (this.state.count != 0) {
+
+        let findOrder = this.props.orders.orders.find(order => order.product.product_id == id);
+        if (findOrder) {
             this.props.orderDelete(id)
-            this.setState({
-                count: this.state.count - 1
-            })
         }
 
+
+
+
+       /*if(this.state.count > 0)
+        this.setState({
+            count: this.state.count - 1
+        })*/
+
+
+    }
+
+    getQuantity(product) {
+        let findOrder = this.props.orders.orders.find(order => order.product.product_id == product.product_id);
+        if (findOrder) {
+            return findOrder.quantity;
+        } else {
+            return 0
+        }
     }
 
 
@@ -62,15 +91,18 @@ class ProductDetail extends Component {
                                                     <span class="glyphicon glyphicon-minus">-</span>
                                                 </button>
                                             </span>
-                                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value={this.state.count} min="1" max="100" />
+                                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value={this.getQuantity(product)} min="1" max="100" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="" onClick={() => this.addOrder(product)}>
                                                     <span class="glyphicon glyphicon-plus">+</span>
                                                 </button>
+    
                                             </span>
                                         </div>
 
+
                                     </div>
+                                    
                                 </div>
                             </div>
                         )
@@ -83,6 +115,7 @@ class ProductDetail extends Component {
 }
 
 function mapStateToProps({ products, orders }) {
+    //console.log("orders117",orders)
     return { products, orders }
 }
 

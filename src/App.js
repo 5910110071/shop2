@@ -10,6 +10,7 @@ import ProductDetail from "./containers/product/ProductDetail"
 import NotFound from "./containers/error/NotFound"
 import ProductEdit from "./containers/product/ProductEdit"
 import PaymentOrder from "./containers/order/PaymentOrder"
+import PaymentOrderConfirm from "./containers/order/PaymentOrderConfirm"
 
 class App extends Component {
 
@@ -21,7 +22,8 @@ class App extends Component {
         <Route exact path = "/about" component = {About} />
 
         <Route exact path = "/order" component = {Order} />
-        <Route exact path = "/PaymentOrder" component = {PaymentOrder} />
+        <Route exact path = "/paymentOrder" component = {PaymentOrder} />
+        <Route exact path = "/paymentOrderConfirm/:id" component = {PaymentOrderConfirm} />
 
         <Route exact path="/product" component={Product}/>
 

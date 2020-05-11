@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { connect } from 'react-redux';
-import { ordersFetch, orderDelete, orderPaymentFetch } from '../../actions/'
+import { withRouter } from "react-router-dom"
+
+import { ordersFetch, orderDelete, ordersPaymentFetch } from '../../actions/'
 import axios from "axios"
 class PaymentOrder extends Component {
     constructor(props) {
         super(props)
     }
     componentDidMount() {
-        this.props.orderPaymentFetch()
+        this.props.ordersPaymentFetch()
         // axios.get("http://localhost:3002/orders").then(res =>{
         //     console.log("res.data",res.data)
         // })
@@ -17,7 +19,7 @@ class PaymentOrder extends Component {
     }
     showOrders() {
         console.log("this.props.orders",this.props.orderPayment)
-        return this.props.orderPayment && this.props.orderPayment.map(order => {
+        return this.props.orderPayment && Array.isArray(this.props.orderPayment) && this.props.orderPayment.map(order => {
             const date = new Date(order.orderDate)
             return (
                 <div key={order.id} className="col-md-12">
@@ -26,7 +28,7 @@ class PaymentOrder extends Component {
                     <p className="text-right">
                         <button className="btn btn-danger btn-sm title" onClick={() => this.delOrder(order)}>X</button>
                     </p>
-
+                    <button onClick = {() => this.props.history.push('/paymentOrderConfirm/'+order.id)}>แจ้งชำระเงิน</button>
                     <h5>วันที่ {date.toLocaleDateString()} {date.toLocaleTimeString()}</h5>
                     <ul>
                         {order.orders && order.orders.map(record => {
@@ -38,6 +40,7 @@ class PaymentOrder extends Component {
                         })}
                     </ul>
                     <p className="title text-right">ยอมรวม {order.totalPrice}</p>
+                   
                 </div>
             )
         })
@@ -64,4 +67,4 @@ function mapStateToprops({ orderPayment }) {
     console.log("orderPaytment1", orderPayment)
     return { orderPayment }
 }
-export default connect(mapStateToprops, { orderPaymentFetch })(PaymentOrder);
+export default withRouter(connect(mapStateToprops, { ordersPaymentFetch })(PaymentOrder))

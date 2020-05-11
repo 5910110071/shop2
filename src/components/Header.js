@@ -94,7 +94,7 @@ class Header extends Component {
                   </li>
 
                   <li class="nav-item active">
-                    <Link class="nav-link title" to="/PaymentOrder">แจ้งชำระเงิน <span class="sr-only">(current)</span></Link>
+                    <Link class="nav-link title" to="/paymentOrder">แจ้งชำระเงิน <span class="sr-only">(current)</span></Link>
                   </li>
 
                   {this.props.showCategoryAndSearch &&
