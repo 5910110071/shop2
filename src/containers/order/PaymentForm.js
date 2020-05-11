@@ -49,5 +49,5 @@ function mapStateToProps({ orderPayment }) {
 
 }
 
-PaymentForm = reduxForm({ validate, form: "paymentFhhorm" })(PaymentForm)
+PaymentForm = reduxForm({ validate, form: "paymentForm" })(PaymentForm)
 export default connect(mapStateToProps)(PaymentForm)
