@@ -89,17 +89,17 @@ class Monitor extends Component {
                     </div>}
                 <h2 className = "title">รายการสินค้า</h2>
                 <div className="row">
-                    <div className="col-md-9 ">
+                    <div className="col-md-12">
                         <ProductList products={this.props.products} onAddOrder={this.addOrder} onSelectProduct = {this.selectProduct} />
                     </div>
-                    <div className="col-md-3">
+                    {/* <div className="col-md-3">
                         <Calculator
                             totalPrice={this.state.totalPrice}
                             orders={this.state.orders}
                             onDelOrder={this.delOrder}
                             onCancelOrder={this.cancelOrder}
                             onConfirmOrder={this.confirmOrder} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )

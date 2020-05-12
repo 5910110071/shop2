@@ -18,29 +18,25 @@ class PaymentOrder extends Component {
 
     }
     showOrders() {
-        console.log("this.props.orders",this.props.orderPayment)
         return this.props.orderPayment && Array.isArray(this.props.orderPayment) && this.props.orderPayment.map(order => {
             const date = new Date(order.orderDate)
             return (
-                <div key={order.id} className="col-md-12">
-                    
-                    <hr/>
-                    <p className="text-right">
-                        <button className="btn btn-danger btn-sm title" onClick={() => this.delOrder(order)}>X</button>
-                    </p>
-                    <button onClick = {() => this.props.history.push('/paymentOrderConfirm/'+order.id)}>แจ้งชำระเงิน</button>
-                    <h5>วันที่ {date.toLocaleDateString()} {date.toLocaleTimeString()}</h5>
-                    <ul>
+                <div key={order.id} className="col-md-4">
+                    <div className="card mb-4">
+                        <h5 className="text-center mt-2">วันที่ {date.toLocaleDateString()} {date.toLocaleTimeString()}</h5>
                         {order.orders && order.orders.map(record => {
                             return (
-                                <div key={record.product.quantity}>
-                                    <img src={record.product.product_thumbnail} class="card-img-top img-thumbnail mb-2 mr-2 " Style="width: 100px;" alt="..." />{record.product.product_name} x {record.quantity} = {record.product.product_price * record.quantity}
+                                <div key={record.product.product_id}>
+                                    <img src={record.product.product_thumbnail} class="card-img-top img-thumbnail mb-2 mr-2 ml-2 " Style="width: 100px;" alt="..." />{record.product.product_name} x {record.quantity} = {record.product.product_price * record.quantity} บาท
                                 </div>
                             )
                         })}
-                    </ul>
-                    <p className="title text-right">ยอมรวม {order.totalPrice}</p>
-                   
+                        <p className="title text-right mr-2">ยอดรวม {order.totalPrice} บาท</p>
+                        <div class="d-flex justify-content-end" >
+                            <button className="btn btn-secondary btn-sm title mr-2 mb-2" onClick={() => this.delOrder(order)}>ยกเลิกรายการ</button>
+                            <button className="btn btn-danger btn-sm title mr-2 mb-2" onClick={() => this.props.history.push('/paymentOrderConfirm/' + order.id)}>แจ้งชำระเงิน</button>
+                        </div>
+                    </div>
                 </div>
             )
         })
@@ -64,7 +60,6 @@ class PaymentOrder extends Component {
     }
 }
 function mapStateToprops({ orderPayment }) {
-    console.log("orderPaytment1", orderPayment)
     return { orderPayment }
 }
 export default withRouter(connect(mapStateToprops, { ordersPaymentFetch })(PaymentOrder))

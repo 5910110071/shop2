@@ -22,7 +22,7 @@ class Order extends Component {
     showOrders2(orders) {
         if (!orders || orders.length == 0) {
             return <h2 className="text-right text-muted title col-12">ไม่มีสินค้าค่ะ</h2>
-        } else {
+        } else { 
             return orders.map(order => {
                 return (
                     <div key={order.product_id} class="col-3 text-right text-success title">

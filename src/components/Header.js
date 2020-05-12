@@ -86,15 +86,20 @@ class Header extends Component {
                   <li class="nav-item active">
                     <Link class="nav-link title" to="/order">รายการสั่งชื้อ <span class="sr-only">(current)</span></Link>
                   </li>
-                  <li class="nav-item active">
+
+                  {/* <li class="nav-item active">
                     <Link class="nav-link title" to="/product">สินค้า <span class="sr-only">(current)</span></Link>
                   </li>
                   <li class="nav-item active">
                     <Link class="nav-link title" to="/about">เกี่ยวกับเรา <span class="sr-only">(current)</span></Link>
-                  </li>
+                  </li> */}
 
                   <li class="nav-item active">
                     <Link class="nav-link title" to="/paymentOrder">แจ้งชำระเงิน <span class="sr-only">(current)</span></Link>
+                  </li>
+
+                  <li class="nav-item active">
+                    <Link class="nav-link title" to="/paymentMornitor">ตรวจสอบรายการสั่งซื้อ<span class="sr-only">(current)</span></Link>
                   </li>
 
                   {this.props.showCategoryAndSearch &&

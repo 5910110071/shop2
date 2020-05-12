@@ -15,16 +15,16 @@ class ProductDetail extends Component {
             this.props.productFetch(this.props.match.params.id)
         }
 
-       /* let findOrder = this.props.orders.orders.find(order => order.product.product_id == this.props.match.params.id);
-        if (findOrder) {
-            this.setState({
-                count: findOrder.quantity
-            })
-        }
-        else
-            this.setState({
-                count: 0
-            })*/
+        /* let findOrder = this.props.orders.orders.find(order => order.product.product_id == this.props.match.params.id);
+         if (findOrder) {
+             this.setState({
+                 count: findOrder.quantity
+             })
+         }
+         else
+             this.setState({
+                 count: 0
+             })*/
     }
 
     addOrder(product) {
@@ -45,10 +45,10 @@ class ProductDetail extends Component {
 
 
 
-       /*if(this.state.count > 0)
-        this.setState({
-            count: this.state.count - 1
-        })*/
+        /*if(this.state.count > 0)
+         this.setState({
+             count: this.state.count - 1
+         })*/
 
 
     }
@@ -85,24 +85,29 @@ class ProductDetail extends Component {
                                             <p className="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                         </div>
 
-                                        <div class="input-group">
+
+                                        <h5 className = "container text-right ">เพิ่มสินค้าลงตะกร้า</h5>
+                                        <div className="container input-group d-flex justify-content-end">
+                                            
                                             <span class="input-group-btn">
                                                 <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="" onClick={() => this.delOrder(product.product_id)}>
                                                     <span class="glyphicon glyphicon-minus">-</span>
                                                 </button>
                                             </span>
-                                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value={this.getQuantity(product)} min="1" max="100" />
+                                            <input type="text" id="quantity" name="quantity" class="form-control input-number col-1 text-center" value={this.getQuantity(product)} min="1" max="100" />
                                             <span class="input-group-btn">
                                                 <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="" onClick={() => this.addOrder(product)}>
                                                     <span class="glyphicon glyphicon-plus">+</span>
                                                 </button>
-    
+
                                             </span>
                                         </div>
 
 
+
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         )

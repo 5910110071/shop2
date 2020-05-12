@@ -16,3 +16,6 @@ export const PRODUCT_CREATE = "product_create"
 export const PRODUCT_UPDATE = "product_update"
 
 export const CATEGORIES_FETCH = "categories_fetch"
+
+export const PAYMENT_POST = "payment_post"
+export const PAYMENT_FETCH = "payment_fetch"

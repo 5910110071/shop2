@@ -7,7 +7,7 @@ import ProductForm from "../../components/product/ProductForm"
 
 class ProductEdit extends Component {
     componentDidMount() {
-        if (this.props.match.params.id) {
+        if (this.props.match.params.id) { 
             this.props.productFetch(this.props.match.params.id)
             //console.log("this.props.match",this.props.match)
         }

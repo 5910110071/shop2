@@ -1,37 +1,36 @@
-import React, { Component } from "react"
+import React, { Component } from "react" 
 import { connect } from "react-redux"
 
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import PaymentForm from "../../containers/order/PaymentForm"
 
-import { ordersFetch, orderDelete, orderPaymentFetch } from '../../actions/'
+import { ordersFetch, orderDelete, orderPaymentFetch , paymentPost } from '../../actions/'
 
 class PaymentOrderComfirm extends Component {
     componentDidMount() {
         if (this.props.match.params.id) {
             this.props.orderPaymentFetch(this.props.match.params.id)
-            console.log("this.props.match", this.props.match)
-            this.props.orderPaymentFetch(this.props.match.params.id)
+           
         }
     }
     render() {
-        const { formValues, match, products, productCreate, productUpdate } = this.props;
-        console.log("formValues", formValues);
+        const { formValues, match, products, productCreate, productUpdate , orderPayment , paymentPost } = this.props;
         return (
             <div>
                 <Header />
                 <div className="container col-md-5">
 
                     <div>
-                        <h2>เพิ่ม</h2>
+                        <h2>แจ้งชำระเงิน</h2>
                         {/* {
                             products.saved &&
                             <div className="alert alert-secondary title" role="alert">
                                 {this.props.products.msg}
                             </div>
                         } */}
-                        <PaymentForm onProductSubmit={() => console.log("formValues2",formValues)} />
+
+                        <PaymentForm onPaymentSubmit={() => paymentPost(formValues) } orderPayment = {orderPayment} />
                     </div>
 
 
@@ -69,7 +68,6 @@ class PaymentOrderComfirm extends Component {
     }
 }
 function mapStateToProps({ form, orderPayment }) {
-    console.log("orderPayment", orderPayment)
     return { formValues: form.paymentForm ? form.paymentForm.values : null, orderPayment }
 }
-export default connect(mapStateToProps, { orderPaymentFetch })(PaymentOrderComfirm)
+export default connect(mapStateToProps, { orderPaymentFetch , paymentPost })(PaymentOrderComfirm)
