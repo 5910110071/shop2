@@ -1,39 +1,104 @@
 import axios from "axios"
-import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE, ORDER_POST , ORDER_CANCEL } from "./types"
-
-
+import { ORDERS_FETCH, ORDER_ADD, ORDER_DELETE, ORDER_POST, ORDER_CANCEL, ORDERS_WAIT_PAYMENT, ORDERS_PAYMENT, ORDER_PAYMENT_FETCH, ORDER_RESET, ORDERS_PAID, ORDERS_PAID_DELETE, ORDERS_PAYMENT_STATUS_UPDATE } from "./types"
+/*
 export const ordersPost = ({ orders, totalPrice }) => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
     return dispatch => {
-        axios.post("http://localhost:3002/orders", { orderDate: new Date(), totalPrice, orders }).then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+        axios.post("http://localhost:3002/orders", { orderDate: new Date(), totalPrice, orders , status : "รอชำระเงิน" }).then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
             res => {
                 dispatch({ type: ORDER_POST, payload: res.data })
             }
         )
     }
 }
+ */
+export const ordersWaitPaymentFetch = () => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
+    return dispatch => {
+        axios.get("http://localhost:3002/orders").then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+            res => {
+                dispatch({ type: ORDERS_WAIT_PAYMENT, payload: res.data })
+            }
+        )
+    }
+}
+
+export const ordersPaidFetch = () => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
+    return dispatch => {
+        axios.get("http://localhost:3002/orders").then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+            res => {
+                dispatch({ type: ORDERS_PAID, payload: res.data })
+            }
+        )
+    }
+}
+
+export const orderPaidDelete = id => {
+    return dispatch => {
+        axios.delete("http://localhost:3002/orders/" + id).then(
+            res => { 
+                axios.get("http://localhost:3002/orders").then(
+                    res => {
+                        dispatch({ type: ORDERS_PAID_DELETE, payload: res.data }) 
+                    } 
+                ) 
+            } 
+        )
+    }
+}
+
+export const ordersPaymentPut = (id, values) => {
+    return dispatch => {
+        axios.put("http://localhost:3002/orders/" + id, values).then(res => {
+            dispatch({ type: ORDERS_PAYMENT });
+        })
+    }
+}
+
+export const ordersPaymentStatusPut = (id, values) => {
+    return dispatch => {
+        axios.put("http://localhost:3002/orders/" + id, values).then(res => {
+            axios.get("http://localhost:3002/orders").then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+                res => {
+                    dispatch({ type: ORDERS_PAID, payload: res.data })
+                }
+            )
+        })
+    }
+}
+
+export const orderPaymentFetch = (id) => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
+    return dispatch => {
+        axios.get("http://localhost:3002/orders/" + id).then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+            res => {
+                dispatch({ type: ORDER_PAYMENT_FETCH, payload: res.data })
+            }
+        )
+    }
+}
+// export const ordersPaymentFetch = () => { // ตอนนี้ทุก order จะส่งมาที่เดียวกันเพราะยังมีการการ login เพื่อระบุตัวตน user
+//     return dispatch => {
+//         axios.get("http://localhost:3002/orders").then( //ต้องแก้โดยการส่งไปที่ DB ของ user แต่ละคน หลังจากนั้นจะดึง ข้อมูลของ User แต่ละคนมาแสดงว่ายืนยันรายการอะไรไปแล้วมั้ง 
+//             res => {
+//                 dispatch({ type: ORDERS_PAYMENT, payload: res.data })
+//             }
+//         )
+//     }
+// }
 
 
+/*
 export const ordersFetch = () => {
     return dispatch => {
         dispatch({ type: ORDERS_FETCH })
     }
 }
-
-/*export const orderDelete = id => {
+*/
+export const ordersReset = () => {
     return dispatch => {
-        axios.delete("http://localhost:3001/orders/" + id).then(
-            res => {
-                axios.get("http://localhost:3001/orders").then(
-                    res => {
-                        dispatch({ type: ORDERS_FETCH, payload: res.data })
-                    }
-                )
-            }
-        )
+        dispatch({ type: ORDER_RESET })
     }
 }
-*/
 
+/*
 export const orderCancel = product => {
     return dispatch => {
         dispatch({ type: ORDER_CANCEL, payload: product })
@@ -51,8 +116,21 @@ export const orderDelete = id => {
         dispatch({ type: ORDER_DELETE, payload: id })
     }
 }
-
-
+*/
+/*export const orderDelete = id => {
+    return dispatch => {
+        axios.delete("http://localhost:3001/orders/" + id).then(
+            res => {
+                axios.get("http://localhost:3001/orders").then(
+                    res => {
+                        dispatch({ type: ORDERS_FETCH, payload: res.data })
+                    }
+                )
+            }
+        )
+    }
+}
+*/
 
 /*
 export const orderPost = (orders) => {

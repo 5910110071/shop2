@@ -2,18 +2,18 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import { reduxForm, Field } from "redux-form"
 import FormField from "../../components/FormField"
-import { orderFormField } from "./OrderFormFields"
-class PaymentForm extends Component {
+import { TrackingNumberFormFields } from "./TrackingNumberFormFields"
+class UpdateTrackingNumberForm extends Component {
 
-    renderFields(orderFormField) {
+    renderFields(TrackingNumberFormFields) {
 
-        return orderFormField.map(({ label, name, type, required }) => {
+        return TrackingNumberFormFields.map(({ label, name, type, required }) => {
             return (
                 <Field key={name} label={label} name={name} type={type} required={required} component={FormField} />
             )
         })
-
     }
+
     showOrders() {
         //console.log("this.props.orders", this.props.orderPayment)
         const date = new Date(this.props.orders.orderDate)
@@ -61,10 +61,11 @@ class PaymentForm extends Component {
 
         )
     }
+
     render() {
         const { onPaymentSubmit } = this.props
         return (
-            <div className="container card  mb-3">
+            <div className="container card  mb-3 ">
                 <div className="row d-flex justify-content-center" >
                     {this.props.orders.saved ?
                         <div class="alert alert-success text-center col-12" role="alert">
@@ -74,7 +75,7 @@ class PaymentForm extends Component {
 
                             <div className="col-6 ">
                                 <form onSubmit={this.props.handleSubmit(onPaymentSubmit)}>
-                                    {this.renderFields(orderFormField)}
+                                    {this.renderFields(TrackingNumberFormFields)}
                                     <div className="d-flex justify-content-end">
                                         <button className="btn  btn-danger title mb-3 " type="submit" >บันทึก</button>
                                     </div>
@@ -92,7 +93,7 @@ class PaymentForm extends Component {
 function validate(values) {
     console.log("values", values)
     const errors = {};
-    orderFormField.forEach(({ name, required }) => {
+    TrackingNumberFormFields.forEach(({ name, required }) => {
         if (!values[name] && required) {
             errors[name] = 'กรุณากรอกข้อมูล'
         }
@@ -109,5 +110,5 @@ function mapStateToProps({ orders }) {
 
 }
 
-PaymentForm = reduxForm({ validate, form: "paymentForm" })(PaymentForm)
-export default connect(mapStateToProps)(PaymentForm)
+UpdateTrackingNumberForm = reduxForm({ validate, form: "TrackingNumberForm" })(UpdateTrackingNumberForm)
+export default connect(mapStateToProps)(UpdateTrackingNumberForm)

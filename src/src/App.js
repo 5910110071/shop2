@@ -9,7 +9,6 @@ import NotFound from "./containers/error/NotFound"
 
 import PaymentOrder from "./containers/order/PaymentOrder"
 import PaymentOrderConfirm from "./containers/order/PaymentOrderConfirm"
-import UpdateTrackingNumber from "./containers/order/UpdateTrackingNumber"
 import PaymentMornitor from "./containers/order/PaymentMornitor"
 
 class App extends Component {
@@ -22,7 +21,6 @@ class App extends Component {
         <Route exact path = "/order" component = {Order} />
         <Route exact path = "/paymentOrder" component = {PaymentOrder} />
         <Route exact path = "/paymentOrderConfirm/:id" component = {PaymentOrderConfirm} />
-        <Route exact path = "/UpdateTrackingNumber/:id" component = {UpdateTrackingNumber} />
         <Route exact path = "/paymentMornitor" component = {PaymentMornitor} />
         <Route exact path="/product/:id" component={ProductDetail}/>
         <Route component={NotFound}/>
